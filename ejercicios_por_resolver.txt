@@ -1,0 +1,31 @@
+3. Registro de calificaciones con estructuras y asignación dinámica (Nivel: Intermedio)
+Objetivo: Combinar estructuras (struct) con memoria dinámica y paso de estructuras a funciones mediante punteros.
+
+El problema: Diseña un sistema para gestionar alumnos.
+
+Crea un struct Estudiante que contenga: char nombre[50], int id y un puntero a float (float *calificaciones) para almacenar un número variable de notas.
+
+En el main, pídele al usuario cuántos estudiantes registrará.
+
+Usa malloc para crear un arreglo dinámico de struct Estudiante.
+
+Para cada estudiante, pídele cuántas calificaciones tiene, reserva memoria dinámica individual para sus calificaciones, y guárdalas.
+
+Finalmente, calcula y muestra el promedio de cada estudiante y libera toda la memoria reservada en cascada (primero las calificaciones de cada uno, luego el arreglo de estudiantes).
+
+Conceptos clave: Estructuras anidadas, punteros a estructuras (->), asignación dinámica de memoria en dos niveles (memoria dentro de memoria).
+
+4. Lista enlazada simple: Inserción ordenada y eliminación (Nivel: Intermedio-Avanzado)
+Objetivo: Dar el Salto a la primera estructura de datos dinámica fundamental: las listas enlazadas.
+
+El problema: Implementa una lista enlazada simple de números enteros. Debes definir un struct Nodo con un dato (int valor) y un puntero al siguiente nodo (struct Nodo *siguiente). Implementa un menú en la consola con las siguientes operaciones obligatorias:
+
+Insertar ordenado: Cada vez que agregues un número, la lista debe mantenerse ordenada de menor a mayor automáticamente.
+
+Eliminar por valor: Buscar un número específico en la lista, remover el nodo de forma segura y liberar la memoria correspondiente (cuidando de no romper los enlaces de la lista).
+
+Mostrar lista: Recorrer la lista desde la cabeza hasta el final imprimiendo los valores.
+
+Liberar lista: Al salir del programa, recorrer toda la lista liberando nodo por nodo para evitar fugas de memoria (memory leaks).
+
+Conceptos clave: Nodos, autorreferencia de estructuras, gestión de punteros head (cabeza), prevención de fugas de memoria
