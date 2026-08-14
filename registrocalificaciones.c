@@ -29,7 +29,58 @@ typedef struct{
     float *calificaciones;
 }Estudiante;
 
-Estudiante *crearEstudiante(char *nombre, int matricula, int numCalificaciones, float *calificaciones){
+Estudiante *crearEstudiante(char *nombre, int matricula, float *calificaciones);
+float calcularPromedio(float *calificaciones);
+void imprimirCalificaciones(float *arr);
+void mostraDatosEstudiantes(Estudiante *estudiantes, int numEstudiantes);
+
+int main(){
+    int numEstudiantes;
+    printf("Cuantos estudiantes van a registrar? ");
+    scanf("%d", &numEstudiantes);
+    printf("\n");
+
+    Estudiante *estudiantes = (Estudiante*)malloc(numEstudiantes * sizeof(Estudiante));
+    char nombre[SIZE_NOMBRE];
+    int matricula;
+    int numCalificaciones;
+    float *calificaciones, calificacion;
+
+    for(int i = 0; i<numEstudiantes; i++){
+        printf("\nIngresa el numero de matricula ");
+        scanf("%d", &matricula);
+        
+        printf("\ningresa el numero de calificaciones: ");
+        scanf("%d", &numCalificaciones);
+        calificaciones = (float*) malloc((numCalificaciones+1) * sizeof(float));
+        for (int j = 0; j<numCalificaciones; j++){
+            printf("\nIngresa la calificacion %d: ", j+1);
+            scanf("%f", &calificacion);                                                                                                                                                                
+            calificaciones[j] = calificacion;
+        }
+        calificaciones[numCalificaciones] = -1.0f;
+        
+
+        printf("\ningresa el nombre del estudiante: ");
+        getchar(); // LIMPIEZA: Consume el '\n' que dejó el último scanf
+        fgets(nombre, SIZE_NOMBRE, stdin); //Lee la cadena de caracteres desde la entrada estandar
+        nombre[strcspn(nombre, "\n")] = '\0'; //En caso de ser menor a 50, limpia el carcter \n y lo remplaza por carcter nulo \0
+
+        estudiantes[i] = *crearEstudiante(nombre, matricula, calificaciones);
+    }
+
+    mostraDatosEstudiantes(estudiantes, numEstudiantes);
+
+    for (int i = 0; i < numEstudiantes; i++) {
+        free(estudiantes[i].calificaciones);
+    }
+
+    free(estudiantes);
+
+    return 0;
+}
+
+Estudiante *crearEstudiante(char *nombre, int matricula, float *calificaciones){
     Estudiante *estudiante = (Estudiante*) malloc(sizeof(Estudiante));
     if(estudiante == NULL) return NULL; //siempre preguntar si se reservo la memoria correctamente
     
@@ -73,50 +124,4 @@ void mostraDatosEstudiantes(Estudiante *estudiantes, int numEstudiantes){
         imprimirCalificaciones(estudiantes[i].calificaciones);
         printf("promedio calculado: %f\n", calcularPromedio(estudiantes[i].calificaciones));
     }
-}
-
-int main(){
-    int numEstudiantes;
-    printf("Cuantos estudiantes van a registrar? ");
-    scanf("%d", &numEstudiantes);
-    printf("\n");
-
-    Estudiante *estudiantes = (Estudiante*)malloc(numEstudiantes * sizeof(Estudiante));
-    char nombre[SIZE_NOMBRE];
-    int matricula;
-    int numCalificaciones;
-    float *calificaciones, calificacion;
-
-    for(int i = 0; i<numEstudiantes; i++){
-        printf("\nIngresa el numero de matricula ");
-        scanf("%d", &matricula);
-        
-        printf("\ningresa el numero de calificaciones: ");
-        scanf("%d", &numCalificaciones);
-        calificaciones = (float*) malloc((numCalificaciones+1) * sizeof(float));
-        for (int j = 0; j<numCalificaciones; j++){
-            printf("\nIngresa la calificacion %d: ", j+1);
-            scanf("%f", &calificacion);
-            calificaciones[j] = calificacion;
-        }
-        calificaciones[numCalificaciones] = -1.0f;
-        
-
-        printf("\ningresa el nombre del estudiante: ");
-        getchar(); // LIMPIEZA: Consume el '\n' que dejó el último scanf
-        fgets(nombre, SIZE_NOMBRE, stdin); //Lee la cadena de caracteres desde la entrada estandar
-        nombre[strcspn(nombre, "\n")] = '\0'; //En caso de ser menor a 50, limpia el carcter \n y lo remplaza por carcter nulo \0
-
-        estudiantes[i] = *crearEstudiante(nombre, matricula, numCalificaciones, calificaciones);
-    }
-
-    mostraDatosEstudiantes(estudiantes, numEstudiantes);
-
-    for (int i = 0; i < numEstudiantes; i++) {
-        free(estudiantes[i].calificaciones);
-    }
-
-    free(estudiantes);
-
-    return 0;
 }
