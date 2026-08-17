@@ -11,6 +11,7 @@ typedef struct Nodo Nodo;
 
 Nodo *crearNodo(tipoDato dato){
     Nodo *nuevoNodo = (Nodo*)malloc(sizeof(Nodo));
+    if( nuevoNodo == NULL) return NULL;
     nuevoNodo->dato=dato;
     nuevoNodo->izq = NULL;
     nuevoNodo->der = NULL;
@@ -20,6 +21,7 @@ Nodo *crearNodo(tipoDato dato){
 void insertarEnArbol(Nodo **raiz, tipoDato dato){
     if(*raiz == NULL){
         *raiz = crearNodo(dato);
+        return;
     }
 
     Nodo *tmp = *raiz;
@@ -51,12 +53,22 @@ void inorden(Nodo *raiz){
     }
 }
 
+void liberarArbol(Nodo *raiz){
+    if(raiz != NULL){
+        liberarArbol(raiz->izq);
+        liberarArbol(raiz->der);
+        free(raiz);
+    }
+}
+
 int main(){
     Nodo *raiz = NULL;
-    for(long i = 0; i<100000000; i++){
-        insertarEnArbol(&raiz, rand());
+    for(long i = 0; i<100; i++){
+        insertarEnArbol(&raiz, rand()%100);
     }
     printf("se guaradaron todos los elementos\n");
-    //inorden(raiz);
+    inorden(raiz);
+    liberarArbol(raiz);
+    printf("\nMemoria liberada con exito! :)\n");
     return 0;
 }
